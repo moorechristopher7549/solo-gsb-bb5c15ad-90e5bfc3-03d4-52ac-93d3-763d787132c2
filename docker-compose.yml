@@ -1,0 +1,22 @@
+services:
+  mapmatch:
+    build: .
+    container_name: mapmatch-api
+    ports:
+      - "8000:8000"
+    environment:
+      # 匹配参数（均可选，缺省用代码内默认值）
+      MM_CANDIDATE_RADIUS_M: "50"
+      MM_MAX_CANDIDATES: "8"
+      MM_SIGMA_M: "15"
+      MM_BETA_M: "30"
+      MM_MAX_SPEED_MPS: "60"
+      MM_SPEED_WEIGHT: "1.0"
+      MM_DB_PATH: /data/mapmatch.db
+      MM_ROADS_GEOJSON: /srv/app/data/roads.geojson
+    volumes:
+      - mapmatch-data:/data
+    restart: unless-stopped
+
+volumes:
+  mapmatch-data:
